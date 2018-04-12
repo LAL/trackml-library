@@ -98,9 +98,9 @@ def load_event(prefix, parts=['hits', 'cells', 'particles', 'truth']):
     """
     return tuple(_LOAD_FUNCTIONS[_](prefix) for _ in parts)
 
-def load_dataset(path, **kw):
+def load_dataset(path, skip=None, nevents=None, **kw):
     """
-    Provide an iterator over all events in a dataset directory.
+    Provide an iterator over (all) events in a dataset directory.
 
     For each event it returns the event_id and the output of `load_event`
     concatenated as a single tuple.
@@ -108,6 +108,10 @@ def load_dataset(path, **kw):
     files = glob.glob(op.join(path, 'event*-*'))
     names = set(op.basename(_).split('-', 1)[0] for _ in files)
     names = sorted(names)
+    if skip is not None:
+        names = names[skip:]
+    if nevents is not None:
+        names = names[:nevents]
     for name in names:
         event_id = int(name[5:])
         yield (event_id,) + load_event(op.join(path, name), **kw)
