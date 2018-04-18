@@ -7,12 +7,12 @@ learning challenge.
 Usage
 -----
 
-To just use the package it can be installed directly as a user package via
+The package it can be installed directly as a user package via
 
     pip install --user <path/to/repository>
 
 To make a local checkout of the repository available directly it can also be
-installed in a development mode
+installed in development mode
 
     pip install --user --editable .
 
@@ -36,7 +36,10 @@ All code is licensed under the [MIT license][mit_license].
 Dataset
 -------
 
-The goal of the tracking machine learning challenge is to group the recorded
+A dataset comprises multiple independent events, where each event contains
+simulated measurements of particles generated in a collision between proton
+bunches at the [Large Hadron Collider][lhc] at [CERN][cern]. The goal of the
+tracking machine learning challenge is to group the recorded measurements or
 hits for each event into tracks, sets of hits that belong to the same initial
 particle. A solution must uniquely associate each hit to one track (although
 some hits can be left unassigned). The training dataset contains the recorded
@@ -135,4 +138,6 @@ each event.
     event as defined in the per-event truth file.
 
 
+[cern]: https://home.cern/
+[lhc]: https://home.cern/topics/large-hadron-collider
 [mit_license]: http://www.opensource.org/licenses/MIT
