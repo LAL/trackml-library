@@ -58,7 +58,7 @@ def drop_hits(truth, probability):
     return _make_submission(truth, out)
 
 def shuffle_hits(truth, probability):
-    """Randomly assign hits to a wrong particle with a certain proability.
+    """Randomly assign hits to a wrong particle with a certain probability.
 
     Parameters
     ----------
