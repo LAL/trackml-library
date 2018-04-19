@@ -12,7 +12,7 @@ def _analyze_tracks(truth, submission):
     Parameters
     ----------
     truth : pandas.DataFrame
-        Truth information. must have hit_id, particle_id, and weight columns.
+        Truth information. Must have hit_id, particle_id, and weight columns.
     submission : pandas.DataFrame
         Proposed hit/track association. Must have hit_id and track_id columns.
 
@@ -112,7 +112,7 @@ def score_event(truth, submission):
     Parameters
     ----------
     truth : pandas.DataFrame
-        Truth information. must have hit_id, particle_id, and weight columns.
+        Truth information. Must have hit_id, particle_id, and weight columns.
     submission : pandas.DataFrame
         Proposed hit/track association. Must have hit_id and track_id columns.
     """
