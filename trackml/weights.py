@@ -10,11 +10,13 @@ import numpy
 import pandas
 
 def _compute_order_weight_matrix(proposal, min_hits, max_hits):
-    """
-    Compute the weight matrix due to the hit order.
+    """Compute the hit order weight matrix.
 
-    Returns a matrix indexed by (nhits, ihit), i.e. the total number of
-    hits in the tracks and the hit index.
+    Returns
+    -------
+    numpy.ndarray
+        Weight matrix indexed by (nhits, ihit), i.e. the total number of
+        hits in the tracks and the hit index.
     """
     w = numpy.zeros((max_hits + 1, max_hits))
     for nhits in range(min_hits, max_hits + 1):
@@ -46,8 +48,7 @@ def print_order_weight_matrix():
         print()
 
 def weight_order(args):
-    """
-    Return the weight due to the hit position along the track.
+    """Return the weight due to the hit order along the track.
     """
     ihit, nhits = args
     if nhits < ORDER_MIN_HITS:
@@ -66,8 +67,7 @@ def weight_order(args):
     return ORDER_MATRIX[nhits, ihit]
 
 def weight_pt(pt, pt_inf=0.5, pt_sup=3, w_min=0.2, w_max=1.):
-    """
-    Return the transverse momentum dependent hit weight.
+    """Return the transverse momentum dependent hit weight.
     """
     # lower cut just to be sure, should not happen except maybe for noise hits
     xp = [min(0.05, pt_inf), pt_inf, pt_sup]
@@ -78,11 +78,22 @@ def weight_pt(pt, pt_inf=0.5, pt_sup=3, w_min=0.2, w_max=1.):
 INVALID_PARTICLED_ID = 0
 
 def weight_hits(truth, particles):
-    """
-    Compute combined hit/particle DataFrame with per-hit weights.
+    """Compute per-hit weights for the scoring metric.
 
-    Handles hits w/ invalid particle ids, e.g. noise, by setting their weight
-    to zero.
+    Hits w/ invalid particle ids, e.g. noise hits, have zero weight.
+
+    Parameters
+    ----------
+    truth : pandas.DataFrame
+        Truth information. Must have hit_id, particle_id, and tz columns.
+    particles : pandas.DataFrame
+        Particle information. Must have particle_id, vz, px, and py columns.
+
+    Returns
+    -------
+    pandas.DataFrame
+        `truth` augmented with additional columns: ihit, nhits, weight_order,
+        weight_pt, and weight.
     """
     # fill selected per-particle information for each hit
     selected = pandas.DataFrame({
