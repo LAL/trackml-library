@@ -4,10 +4,10 @@ Tracking machine learning challenge (TrackML) utility library
 A small library to simplify working with the dataset of the tracking machine
 learning challenge.
 
-Usage
------
+Installation
+------------
 
-The package it can be installed directly as a user package via
+The package can be installed as a user package via
 
     pip install --user <path/to/repository>
 
@@ -19,6 +19,54 @@ installed in development mode
 In both cases, the package can be imported via `import trackml` without
 additional configuration. In the later case, changes made to the code are
 immediately visible without having to reinstall the package.
+
+Usage
+-----
+
+To read the data for one event from the training dataset including the ground
+truth information:
+
+```python
+from trackml.dataset import load_event
+
+hits, cells, particles, truth = load_event('path/to/event000000123')
+```
+
+For the test dataset only the hit information is available. To read only this
+data:
+
+```python
+from trackml.dataset import load_event
+
+hits, cells = load_event('path/to/event000000456', parts=['hits', 'cells'])
+```
+
+To iterate over events in a dataset:
+
+```python
+from trackml.dataset import load_dataset
+
+for event_id, hits, cells, particles, truth in load_dataset('path/to/dataset'):
+    ...
+```
+
+Each event is lazily loaded during the iteration. Options are available to
+read only a subset of available events or only read selected parts, e.g. only
+hits or only particles.
+
+To generate a random test submission from truth information and compute the
+expected score:
+
+```python
+from trackml.randomize import shuffle_hits
+from trackml.score import score_event
+
+shuffled = shuffle_hits(truth, 0.05) # 5% probability to reassign a hit
+score = score_event(truth, shuffled)
+```
+
+All methods either take or return `pandas.DataFrame` objects. Please have a look
+at the function docstrings for detailed documentation.
 
 Authors
 -------
