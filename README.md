@@ -1,7 +1,7 @@
 Tracking machine learning challenge (TrackML) utility library
 =============================================================
 
-A small library to simplify working with the dataset of the tracking machine
+A python library to simplify working with the dataset of the tracking machine
 learning challenge.
 
 Installation
