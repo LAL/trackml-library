@@ -11,7 +11,7 @@ with io.open(op.join(here, 'README.md'), mode='rt', encoding='utf-8') as f:
 
 setup(
     name='trackml',
-    version='1.dev0',
+    version='1.b0',
     description='TrackML utility library',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -19,7 +19,7 @@ setup(
     author='Moritz Kiehn', # TODO who else
     author_email='msmk@cern.ch', # TODO or mailing list
     classifiers=[
-        'Development Status :: 3 - Alpha', # TODO update for first release
+        'Development Status :: 4 - Beta', # TODO update for first release
         'Intended Audience :: Science/Research',
         'Topic :: Scientific/Engineering :: Information Analysis',
         'Topic :: Scientific/Engineering :: Physics',
