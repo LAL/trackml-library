@@ -33,16 +33,16 @@ ORDER_MIN_HITS = 4
 ORDER_MAX_HITS = 20
 ORDER_MATRIX = _compute_order_weight_matrix(ORDER_PROPOSAL, ORDER_MIN_HITS, ORDER_MAX_HITS)
 
-def print_order_weight_matrix():
-    print('order weight matrix (weights in percent):')
-    print('nhits | ihit')
-    print('      |', end='')
+def print_order_weight_matrix(prefix=''):
+    print(prefix, 'order weight matrix (weights in percent):', sep='')
+    print(prefix, 'nhits | ihit', sep='')
+    print(prefix, '      |', sep='', end='')
     for i in range(len(ORDER_MATRIX[1:][0])):
         print(' {:2d}'.format(i), end='')
     print()
-    print('------+' + len(ORDER_MATRIX[1:][0]) * 3 * '-')
+    print(prefix, '------+' + len(ORDER_MATRIX[1:][0]) * 3 * '-', sep='')
     for nhits, row in enumerate(ORDER_MATRIX[1:], start=1):
-        print('  {: 3d} |'.format(nhits), end='')
+        print(prefix, '  {: 3d} |'.format(nhits), sep='', end='')
         for ihit in range(nhits):
             print(' {:2.0f}'.format(100 * row[ihit]), end='')
         print()
