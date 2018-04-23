@@ -96,14 +96,14 @@ particles. The test dataset contains only the recorded hits.
 
 The dataset is provided as a set of plain `.csv` files ('.csv.gz' or '.csv.bz2'
 are also allowed)'. Each event has four associated files that contain hits,
-hit cells, particles, and the ground truth association between them.
+hit cells, particles, and the ground truth association between them. The common prefix (like `event000000000`) is fully constrained to be `event` followed by 9 digits.
 
     event000000000-hits.csv
-    event000000000-details.csv
+    event000000000-cells.csv
     event000000000-particles.csv
     event000000000-truth.csv
     event000000001-hits.csv
-    event000000001-details.csv
+    event000000001-cells.csv
     event000000001-particles.csv
     event000000001-truth.csv
 
@@ -132,9 +132,9 @@ are given here to simplify detector-specific data handling.
 ### Event hit cells
 
 The cells file contains the constituent active detector cells that comprise each
-hit. A cell is the smallest granularity inside each detector module. It is
+hit. A cell is the smallest granularity inside each detector module, much like a pixel on a screen, except that depending on the volume_id a cell can be a square or a long rectangle. It is
 identified by two channel identifiers that are unique within each detector
-module and encode the position. A cell can provide signal information that the
+module and encode the position, much like row/column numbers of a matrix. A cell can provide signal information that the
 detector module has recorded in addition to the position. Depending on the
 detector type only one of the channel identifiers is valid, e.g. for the strip
 detectors, and the value might have different resolution.
@@ -165,25 +165,21 @@ particle/track.
 *   **hit_id**: numerical identifier of the hit as defined in the hits file.
 *   **particle_id**: numerical identifier of the generating particle as defined
     in the particles file.
-*   **tx, ty, tz** true intersection point in global coordinates between
+*   **tx, ty, tz** true intersection point in global coordinates (in millimeters) between
     the particle trajectory and the sensitive surface.
-*   **tpx, tpy, tpz** true particle momentum in the global coordinate system
-    at the intersection point.
+*   **tpx, tpy, tpz** true particle momentum (in GeV/c) in the global coordinate system
+    at the intersection point. The corresponding unit vector is tangent to the particle trajectory.
 *   **weight** per-hit weight used for the scoring metric; total sum of weights
     within one event equals to one.
 
 ### Dataset submission information
 
-The submission file must associated each hit in each event to one reconstructed
-particle track. The reconstructed tracks must be uniquely identified only within
-each event.
+The submission file must associate each hit in each event to one and only one reconstructed particle track. The reconstructed tracks must be uniquely identified only within each event.  Participants are advised to compress the submission file (with zip, bzip2, gzip) before submission to Kaggle site. 
 
 *   **event_id**: numerical identifier of the event; corresponds to the number
     found in the per-event file name prefix.
-*   **hit_id**: numerical identifier of the hit inside the event as defined
-    in the per-event hits file.
-*   **track_id**: numerical identifier of the truth particle inside the
-    event as defined in the per-event truth file.
+*   **hit_id**: numerical identifier (non negative integer) of the hit inside the event as defined in the per-event hits file.
+*   **track_id**: user defined numerical identifier (non negative integer) of the track 
 
 
 [cern]: https://home.cern/
