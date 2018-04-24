@@ -87,18 +87,20 @@ def weight_hits(truth, particles):
     truth : pandas.DataFrame
         Truth information. Must have hit_id, particle_id, and tz columns.
     particles : pandas.DataFrame
-        Particle information. Must have particle_id, vz, px, and py columns.
+        Particle information. Must have particle_id, vz, px, py, and nhits
+        columns.
 
     Returns
     -------
     pandas.DataFrame
-        `truth` augmented with additional columns: ihit, nhits, weight_order,
-        weight_pt, and weight.
+        `truth` augmented with additional columns: particle_nhits, ihit,
+        weight_order, weight_pt, and weight.
     """
     # fill selected per-particle information for each hit
     selected = pandas.DataFrame({
         'particle_id': particles['particle_id'],
         'particle_vz': particles['vz'],
+        'particle_nhits': particles['nhits'],
         'weight_pt': weight_pt(numpy.hypot(particles['px'], particles['py'])),
     })
     combined = pandas.merge(truth, selected,
@@ -107,15 +109,14 @@ def weight_hits(truth, particles):
 
     # fix pt weight for hits w/o associated particle
     combined['weight_pt'].fillna(0.0, inplace=True)
-
+    # fix nhits for hits w/o associated particle
+    combined['particle_nhits'].fillna(0.0, inplace=True)
+    combined['particle_nhits'] = combined['particle_nhits'].astype('i4')
     # compute hit count and order using absolute distance from particle vertex
     combined['abs_dvz'] = numpy.absolute(combined['tz'] - combined['particle_vz'])
-    combined['nhits'] = combined.groupby('particle_id')['abs_dvz'].transform(numpy.size).astype('i4')
-    combined.loc[combined['particle_id'] == INVALID_PARTICLED_ID, 'nhits'] = 0
     combined['ihit'] = combined.groupby('particle_id')['abs_dvz'].rank().transform(lambda x: x - 1).fillna(0.0).astype('i4')
-
     # compute order-dependent weight
-    combined['weight_order'] = combined[['ihit', 'nhits']].apply(weight_order, axis=1)
+    combined['weight_order'] = combined[['ihit', 'particle_nhits']].apply(weight_order, axis=1)
 
     # compute combined weight normalized to 1
     w = combined['weight_pt'] * combined['weight_order']
