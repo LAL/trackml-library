@@ -52,9 +52,9 @@ for event_id, hits, cells, particles, truth in load_dataset('path/to/dataset'):
 ```
 
 The dataset path can be the path to a directory or to a zip file containing the
-events csv files. Each event is lazily loaded during the iteration. Options are
-available to read only a subset of available events or only read selected parts,
-e.g. only hits or only particles.
+events `.csv` files. Each event is lazily loaded during the iteration. Options
+are available to read only a subset of available events or only read selected
+parts, e.g. only hits or only particles.
 
 To generate a random test submission from truth information and compute the
 expected score:
@@ -96,8 +96,8 @@ some hits can be left unassigned). The training dataset contains the recorded
 hits, their truth association to particles, and the initial parameters of those
 particles. The test dataset contains only the recorded hits.
 
-The dataset is provided as a set of plain `.csv` files ('.csv.gz' or '.csv.bz2'
-are also allowed)'. Each event has four associated files that contain hits, hit
+The dataset is provided as a set of plain `.csv` files (`.csv.gz` or `.csv.bz2`
+are also allowed). Each event has four associated files that contain hits, hit
 cells, particles, and the ground truth association between them. The common
 prefix (like `event000000000`) is fully constrained to be `event` followed by 9
 digits.
@@ -185,7 +185,7 @@ particle/track.
 The submission file must associate each hit in each event to one and only one
 reconstructed particle track. The reconstructed tracks must be uniquely
 identified only within each event.  Participants are advised to compress the
-submission file (with zip, bzip2, gzip) before submission to
+submission file (with zip, bzip2, gzip) before submission to the
 [Kaggle site](kaggle_trackml).
 
 *   **event_id**: numerical identifier of the event; corresponds to the number
