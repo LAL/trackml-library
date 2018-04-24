@@ -11,15 +11,15 @@ with io.open(op.join(here, 'README.md'), mode='rt', encoding='utf-8') as f:
 
 setup(
     name='trackml',
-    version='1b1',
+    version='1',
     description='TrackML utility library',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/LAL/trackml-library',
-    author='Moritz Kiehn', # TODO who else
-    author_email='msmk@cern.ch', # TODO or mailing list
+    author='Moritz Kiehn',
+    author_email='msmk@cern.ch',
     classifiers=[
-        'Development Status :: 4 - Beta', # TODO update for first release
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Science/Research',
         'Topic :: Scientific/Engineering :: Information Analysis',
         'Topic :: Scientific/Engineering :: Physics',
