@@ -2,7 +2,7 @@ TrackML utility library
 =======================
 
 A python library to simplify working with the
-[High Energy Physics Tracking Machine Learning challenge](kaggle_trackml)
+[High Energy Physics Tracking Machine Learning challenge][kaggle_trackml]
 dataset.
 
 Installation
@@ -186,7 +186,7 @@ The submission file must associate each hit in each event to one and only one
 reconstructed particle track. The reconstructed tracks must be uniquely
 identified only within each event.  Participants are advised to compress the
 submission file (with zip, bzip2, gzip) before submission to the
-[Kaggle site](kaggle_trackml).
+[Kaggle site][kaggle_trackml].
 
 *   **event_id**: numerical identifier of the event; corresponds to the number
     found in the per-event file name prefix.
