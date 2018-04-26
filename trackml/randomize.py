@@ -24,7 +24,7 @@ def set_seed(seed):
     numpy.random.seed(seed)
 
 def random_solution(truth, ntracks):
-    """Generate a completely random solution with the given number of particles.
+    """Generate a completely random solution with the given number of tracks.
 
     Parameters
     ----------
@@ -33,7 +33,7 @@ def random_solution(truth, ntracks):
     ntracks : int
         Number of tracks the submission should contain.
     """
-    ids = numpy.random.randint(1, nparticles + 1, size=len(mapping), dtype='i4')
+    ids = numpy.random.randint(1, ntracks + 1, size=len(truth), dtype='i4')
     return _make_submission(truth, ids, renumber=False)
 
 def drop_hits(truth, probability):
