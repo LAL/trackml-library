@@ -23,18 +23,18 @@ def set_seed(seed):
     """Set the random seed used for randomness in this module."""
     numpy.random.seed(seed)
 
-def random_solution(truth, ntracks):
+def random_solution(hits, ntracks):
     """Generate a completely random solution with the given number of tracks.
 
     Parameters
     ----------
-    truth : pandas.DataFrame
-        Truth mapping must contain hit_id and particle_id columns.
+    hits : pandas.DataFrame
+        Hits information must contain hit_id column.
     ntracks : int
         Number of tracks the submission should contain.
     """
-    ids = numpy.random.randint(1, ntracks + 1, size=len(truth), dtype='i4')
-    return _make_submission(truth, ids, renumber=False)
+    ids = numpy.random.randint(1, ntracks + 1, size=len(hits), dtype='i4')
+    return _make_submission(hits, ids, renumber=False)
 
 def drop_hits(truth, probability):
     """Drop hits from each track with a certain probability.
