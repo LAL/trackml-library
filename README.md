@@ -194,6 +194,49 @@ submission file (with zip, bzip2, gzip) before submission to the
 *   **track_id**: user-defined numerical identifier (non-negative integer) of
     the track.
 
+### Additional detector geometry information
+
+The detector modules that measure particles and generated the hits are organized
+into detector groups or volumes identified by a volume id. Inside a volume they
+are further grouped into layers identified by a layer id. Each layer can contain
+an arbitrary number of detector modules, the smallest geometrically distinct
+detector object, each identified by a module_id. Within each group detector
+modules are of the same type have e.g. the same granularity. All simulated
+detector modules are so-called semiconductor sensors that are build from thin
+silicon sensor chips. Each module can be represented by a two-dimensional,
+planar, bounded sensitive surface. These sensitive surfaces are subdivided into
+regular grids that define the detectors cells, the smallest granularity within
+the detector.
+
+Each module has a different position and orientation described in the detectors
+file. A local, right-handed coordinate system is defined on each sensitive
+surface such that the first two coordinates u and v are on the sensitive surface
+and the third coordinate w is normal to the surface. The orientation and
+position are defined by the following transformation
+
+    pos_xyz = rotation_matrix * pos_uvw + offset
+
+that transform a position described in local coordinates u,v,w into the
+equivalent position x,y,z in global coordinates using a rotation matrix and
+an offset.
+
+*   **volume_id**: numerical identifier of the detector group.
+*   **layer_id**: numerical identifier of the detector layer inside the
+    group.
+*   **module_id**: numerical identifier of the detector module inside
+    the layer.
+*   **cx, cy, cz**: position of the local origin in the described in the global
+    coordinate system (in millimeter).
+*   **rot_xu, rot_xv, rot_xw, rot_yu, ...**: components of the rotation matrix
+    to rotate from local u,v,w to global x,y,z coordinates.
+*   **module_t**: thickness of the detector module (in millimeter).
+*   **module_minhu, module_maxhu**: the minimum/maximum half-length of the
+    module boundary along the local u direction (in millimeter).
+*   **module_hv**: the half-length of the module boundary along the local v
+    direction (in millimeter).
+*   **pitch_u, pitch_v**: the size of detector cells along the local u and v
+    direction (in millimeter).
+
 
 [cern]: https://home.cern
 [lhc]: https://home.cern/topics/large-hadron-collider
