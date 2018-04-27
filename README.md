@@ -170,7 +170,8 @@ particle/track.
 
 *   **hit_id**: numerical identifier of the hit as defined in the hits file.
 *   **particle_id**: numerical identifier of the generating particle as defined
-    in the particles file.
+    in the particles file. A value of 0 means that the hit did not originate
+    from a reconstructible particle, but e.g. from detector noise.
 *   **tx, ty, tz** true intersection point in global coordinates (in
     millimeters) between the particle trajectory and the sensitive surface.
 *   **tpx, tpy, tpz** true particle momentum (in GeV/c) in the global
