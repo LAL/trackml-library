@@ -121,7 +121,7 @@ a name starting with `submission`, e.g.
 The hits file contains the following values for each hit/entry:
 
 *   **hit_id**: numerical identifier of the hit inside the event.
-*   **x, y, z**: measured x, y, z position (in millimeters) of the hit in
+*   **x, y, z**: measured x, y, z position (in millimeter) of the hit in
     global coordinates.
 *   **volume_id**: numerical identifier of the detector group.
 *   **layer_id**: numerical identifier of the detector layer inside the
