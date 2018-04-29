@@ -15,7 +15,7 @@ The package can be installed as a user package via
 To make a local checkout of the repository available directly it can also be
 installed in development mode
 
-    pip install --user --editable .
+    pip install --user --editable <path/to/local/checkout>
 
 In both cases, the package can be imported via `import trackml` without
 additional configuration. In the later case, changes made to the code are
@@ -86,6 +86,16 @@ All code is licensed under the [MIT license][mit_license].
 Dataset
 -------
 
+The following files are available for download from the participants.
+
+*   **sample_submission.zip**: a sample submission file (score null)
+*   **test.zip**: the test datasetwhich needs to be evaluated to build the submission
+*   **train_1.zip,train_2.zip,train_3.zip,train_4.zip,train_5.zip**: the training dataset split in 5 for convenience
+*   **train_sample**: a small training dataset for convenience
+*   **detectors.csv**: detector geometry information
+
+
+
 A dataset comprises multiple independent events, where each event contains
 simulated measurements of particles generated in a collision between proton
 bunches at the [Large Hadron Collider][lhc] at [CERN][cern]. The goal of the
@@ -96,7 +106,7 @@ some hits can be left unassigned). The training dataset contains the recorded
 hits, their truth association to particles, and the initial parameters of those
 particles. The test dataset contains only the recorded hits.
 
-The dataset is provided as a set of plain `.csv` files. Each event has four
+Once unzipped, the dataset is provided as a set of plain `.csv` files. Each event has four
 associated files that contain hits, hit cells, particles, and the ground truth
 association between them. The common prefix, e.g. `event000000010`, is always
 `event` followed by 9 digits.
@@ -135,7 +145,8 @@ are given here to simplify detector-specific data handling.
 ### Event hit cells
 
 The cells file contains the constituent active detector cells that comprise each
-hit. A cell is the smallest granularity inside each detector module, much like a
+hit. The cells can be used to refine the hit to track association. 
+A cell is the smallest granularity inside each detector module, much like a
 pixel on a screen, except that depending on the volume_id a cell can be a square
 or a long rectangle. It is identified by two channel identifiers that are unique
 within each detector module and encode the position, much like column/row
