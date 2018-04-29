@@ -103,8 +103,7 @@ tracking machine learning challenge is to group the recorded measurements or
 hits for each event into tracks, sets of hits that belong to the same initial
 particle. A solution must uniquely associate each hit to one track (although
 some hits can be left unassigned). The training dataset contains the recorded
-hits, their truth association to particles, and the initial parameters of those
-particles. The test dataset contains only the recorded hits.
+hits, their ground truth counterpart and their association to particles, and the initial parameters of those particles. The test dataset contains only the recorded hits.
 
 Once unzipped, the dataset is provided as a set of plain `.csv` files. Each event has four
 associated files that contain hits, hit cells, particles, and the ground truth
