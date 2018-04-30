@@ -83,18 +83,21 @@ License
 
 All code is licensed under the [MIT license][mit_license].
 
+Files
+-----
+
+The following files are available for download to the participants:
+
+*   **sample_submission.zip**: a sample submission file with score zero.
+*   **test.zip**: the test dataset with 125 events; the basis for all
+    submissions.
+*   **train_{1,2,3,4,5}.zip**: the full training dataset with 8850 events split
+    into 5 files for convenience.
+*   **train_sample.zip**: the first 100 events from the training dataset.
+*   **detectors.zip**: additional detector geometry information.
+
 Dataset
 -------
-
-The following files are available for download from the participants.
-
-*   **sample_submission.zip**: a sample submission file (score null)
-*   **test.zip**: the test datasetwhich needs to be evaluated to build the submission
-*   **train_1.zip,train_2.zip,train_3.zip,train_4.zip,train_5.zip**: the training dataset split in 5 for convenience
-*   **train_sample**: a small training dataset for convenience
-*   **detectors.csv**: detector geometry information
-
-
 
 A dataset comprises multiple independent events, where each event contains
 simulated measurements of particles generated in a collision between proton
@@ -103,12 +106,14 @@ tracking machine learning challenge is to group the recorded measurements or
 hits for each event into tracks, sets of hits that belong to the same initial
 particle. A solution must uniquely associate each hit to one track (although
 some hits can be left unassigned). The training dataset contains the recorded
-hits, their ground truth counterpart and their association to particles, and the initial parameters of those particles. The test dataset contains only the recorded hits.
+hits, their ground truth counterpart and their association to particles, and the
+initial parameters of those particles. The test dataset contains only the
+recorded hits.
 
-Once unzipped, the dataset is provided as a set of plain `.csv` files. Each event has four
-associated files that contain hits, hit cells, particles, and the ground truth
-association between them. The common prefix, e.g. `event000000010`, is always
-`event` followed by 9 digits.
+Once unzipped, the dataset is provided as a set of plain `.csv` files. Each
+event has four associated files that contain hits, hit cells, particles, and the
+ground truth association between them. The common prefix, e.g. `event000000010`,
+is always `event` followed by 9 digits.
 
     event000000000-hits.csv
     event000000000-cells.csv
@@ -144,7 +149,7 @@ are given here to simplify detector-specific data handling.
 ### Event hit cells
 
 The cells file contains the constituent active detector cells that comprise each
-hit. The cells can be used to refine the hit to track association. 
+hit. The cells can be used to refine the hit to track association.
 A cell is the smallest granularity inside each detector module, much like a
 pixel on a screen, except that depending on the volume_id a cell can be a square
 or a long rectangle. It is identified by two channel identifiers that are unique
