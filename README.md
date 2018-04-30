@@ -100,12 +100,12 @@ Dataset
 -------
 
 A dataset comprises multiple independent events, where each event contains
-simulated measurements of particles generated in a collision between proton
+simulated measurements (essentially 3D points) of particles generated in a collision between proton
 bunches at the [Large Hadron Collider][lhc] at [CERN][cern]. The goal of the
 tracking machine learning challenge is to group the recorded measurements or
 hits for each event into tracks, sets of hits that belong to the same initial
-particle. A solution must uniquely associate each hit to one track (although
-some hits can be left unassigned). The training dataset contains the recorded
+particle. A solution must uniquely associate each hit to one track. 
+The training dataset contains the recorded
 hits, their ground truth counterpart and their association to particles, and the
 initial parameters of those particles. The test dataset contains only the
 recorded hits.
@@ -212,11 +212,12 @@ submission file (with zip, bzip2, gzip) before submission to the
 
 ### Additional detector geometry information
 
-The detector modules that measure particles and generated the hits are organized
+The detector is built from silicon slabs (or modules) (rectangular or trapezoïdal), arranged in cylinders and disks, which measure the position (or hits) of the particles that cross them.
+The detector modules are organized
 into detector groups or volumes identified by a volume id. Inside a volume they
 are further grouped into layers identified by a layer id. Each layer can contain
 an arbitrary number of detector modules, the smallest geometrically distinct
-detector object, each identified by a module_id. Within each group detector
+detector object, each identified by a module_id. Within each group, detector
 modules are of the same type have e.g. the same granularity. All simulated
 detector modules are so-called semiconductor sensors that are build from thin
 silicon sensor chips. Each module can be represented by a two-dimensional,
