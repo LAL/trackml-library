@@ -86,7 +86,7 @@ All code is licensed under the [MIT license][mit_license].
 Files
 -----
 
-The following files are available for download to the participants:
+The following files are available for the participants:
 
 *   **sample_submission.zip**: a sample submission file with score zero.
 *   **test.zip**: the test dataset with 125 events; the basis for all
@@ -104,7 +104,7 @@ simulated measurements (essentially 3D points) of particles generated in a colli
 bunches at the [Large Hadron Collider][lhc] at [CERN][cern]. The goal of the
 tracking machine learning challenge is to group the recorded measurements or
 hits for each event into tracks, sets of hits that belong to the same initial
-particle. A solution must uniquely associate each hit to one track. 
+particle. A solution must uniquely associate each hit to one track.
 The training dataset contains the recorded
 hits, their ground truth counterpart and their association to particles, and the
 initial parameters of those particles. The test dataset contains only the
@@ -212,8 +212,9 @@ submission file (with zip, bzip2, gzip) before submission to the
 
 ### Additional detector geometry information
 
-The detector is built from silicon slabs (or modules) (rectangular or trapezoïdal), arranged in cylinders and disks, which measure the position (or hits) of the particles that cross them.
-The detector modules are organized
+The detector is built from silicon slabs (or modules, rectangular or
+trapezoïdal), arranged in cylinders and disks, which measure the position (or
+hits) of the particles that cross them. The detector modules are organized
 into detector groups or volumes identified by a volume id. Inside a volume they
 are further grouped into layers identified by a layer id. Each layer can contain
 an arbitrary number of detector modules, the smallest geometrically distinct
