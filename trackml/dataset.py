@@ -156,7 +156,9 @@ def _extract_event_id(prefix):
     """Extract event_id from prefix, e.g. event_id=1 from `event000000001`
     or from `train_1/event000000001`
     """
-    return int(prefix[prefix.find("event") + 5:])
+    regex = r".*event(\d+)"
+    groups = re.findall(regex, prefix)
+    return int(groups[0])
 
 def _iter_dataset_dir(directory, prefixes, parts):
     """Iterate over selected events files inside a directory.
