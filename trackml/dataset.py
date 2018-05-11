@@ -1,6 +1,6 @@
 """TrackML dataset loading"""
 
-__authors__ = ['Moritz Kiehn', 'Sabrina Amrouche']
+__authors__ = ['Moritz Kiehn', 'Sabrina Amrouche', 'Nimar Arora']
 
 import glob
 import os
@@ -130,9 +130,12 @@ def load_dataset(path, skip=None, nevents=None, parts=DEFAULT_PARTS):
     """
     # extract a sorted list of event file prefixes.
     def list_prefixes(files):
-        regex = re.compile('^event\d{9}-[a-zA-Z]+.csv')
+        # Note: the file names may optionally have a directory prefix if they
+        # are derived from a zipfile, for example. Hence the regular expression
+        # can't be anchored at the beginning of the file name.
+        regex = re.compile('.*event\d{9}-[a-zA-Z]+.csv$')
         files = filter(regex.match, files)
-        prefixes = set(op.basename(_).split('-', 1)[0] for _ in files)
+        prefixes = set(_.split('-', 1)[0] for _ in files)
         prefixes = sorted(prefixes)
         if skip is not None:
             prefixes = prefixes[skip:]
@@ -150,9 +153,12 @@ def load_dataset(path, skip=None, nevents=None, parts=DEFAULT_PARTS):
                 yield x
 
 def _extract_event_id(prefix):
-    """Extract event_id from prefix, e.g. event_id=1 from `event000000001`.
+    """Extract event_id from prefix, e.g. event_id=1 from `event000000001`
+    or from `train_1/event000000001`
     """
-    return int(prefix[5:])
+    regex = r".*event(\d+)"
+    groups = re.findall(regex, prefix)
+    return int(groups[0])
 
 def _iter_dataset_dir(directory, prefixes, parts):
     """Iterate over selected events files inside a directory.
@@ -161,7 +167,7 @@ def _iter_dataset_dir(directory, prefixes, parts):
         yield (_extract_event_id(p),) + load_event(op.join(directory, p), parts)
 
 def _iter_dataset_zip(zipfile, prefixes, parts):
-    """"Iterate over selected event files inside a zip archive.
+    """Iterate over selected event files inside a zip archive.
     """
     for p in prefixes:
         files = [zipfile.open('{}-{}.csv'.format(p, _), mode='r') for _ in parts]
