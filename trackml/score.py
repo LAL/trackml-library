@@ -28,7 +28,7 @@ def _analyze_tracks(truth, submission):
     # combined event with minimal reconstructed and truth information
     event = pandas.merge(truth[['hit_id', 'particle_id', 'weight']],
                          submission[['hit_id', 'track_id']],
-                         on=['hit_id'], how='left', validate='one_to_one')
+                         on=['hit_id'], how='left')
     event.drop('hit_id', axis=1, inplace=True)
     event.sort_values(by=['track_id', 'particle_id'], inplace=True)
 
