@@ -11,7 +11,7 @@ with io.open(op.join(here, 'README.md'), mode='rt', encoding='utf-8') as f:
 
 setup(
     name='trackml',
-    version='2',
+    version='3.dev',
     description='TrackML utility library',
     long_description=long_description,
     long_description_content_type='text/markdown',
