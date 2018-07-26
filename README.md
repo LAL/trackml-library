@@ -169,6 +169,9 @@ particle.
 The particles files contains the following values for each particle/entry:
 
 *   **particle_id**: numerical identifier of the particle inside the event.
+*   **particle_type**: numerical identifier of the particle type;
+    numbering scheme is the
+    [Particle Data Group Monte Carlo numbering scheme](pdg_mc_numbering).
 *   **vx, vy, vz**: initial position or vertex (in millimeters) in global
     coordinates.
 *   **px, py, pz**: initial momentum (in GeV/c) along each global axis.
@@ -260,3 +263,4 @@ an offset.
 [lhc]: https://home.cern/topics/large-hadron-collider
 [mit_license]: http://www.opensource.org/licenses/MIT
 [kaggle_trackml]: https://www.kaggle.com/c/trackml-particle-identification
+[pdg_mc_numbering]: http://pdg.lbl.gov/2018/reviews/rpp2018-rev-monte-carlo-numbering.pdf

@@ -27,6 +27,7 @@ HITS_DTYPES = dict([
 ])
 PARTICLES_DTYPES = dict([
     ('particle_id', 'i8'),
+    ('particle_type', 'i4'),
     ('vx', 'f4'),
     ('vy', 'f4'),
     ('vz', 'f4'),
