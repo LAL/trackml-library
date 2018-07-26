@@ -11,7 +11,7 @@ with io.open(op.join(here, 'README.md'), mode='rt', encoding='utf-8') as f:
 
 setup(
     name='trackml',
-    version='2',
+    version='3.dev',
     description='TrackML utility library',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -32,6 +32,9 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     packages=['trackml'],
-    install_requires=['numpy', 'pandas'],
+    install_requires=[
+        'numpy',
+        'pandas>=0.21.0',
+    ],
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
 )
