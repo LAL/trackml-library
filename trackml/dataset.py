@@ -59,6 +59,7 @@ DEFAULT_PARTS = ['hits', 'cells', 'particles', 'truth']
 def _load_event_data(prefix, name):
     """Load per-event data for one single type, e.g. hits, or particles.
     """
+    # csv files can be individually zipped with extension .csv.gz
     expr = '{!s}-{}.csv*'.format(prefix, name)
     files = glob.glob(expr)
     dtype = DTYPES[name]
@@ -144,7 +145,7 @@ def load_dataset(path, skip=None, nevents=None, parts=DEFAULT_PARTS):
             prefixes = prefixes[:nevents]
         return prefixes
 
-    # TODO use yield from when we increase the python requirement
+    # TODO use `yield from` once we increase the python requirement
     if op.isdir(path):
         for x in _iter_dataset_dir(path, list_prefixes(os.listdir(path)), parts):
             yield x
@@ -154,10 +155,11 @@ def load_dataset(path, skip=None, nevents=None, parts=DEFAULT_PARTS):
                 yield x
 
 def _extract_event_id(prefix):
-    """Extract event_id from prefix, e.g. event_id=1 from `event000000001`
-    or from `train_1/event000000001`
+    """Extract event_id from prefix.
+
+    E.g. event_id=1 from `event000000001` or from `train_1/event000000001`
     """
-    regex = r".*event(\d+)"
+    regex = r'.*event(\d+)'
     groups = re.findall(regex, prefix)
     return int(groups[0])
 
