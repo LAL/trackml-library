@@ -133,7 +133,7 @@ def load_dataset(path, skip=None, nevents=None, parts=DEFAULT_PARTS):
         # Note: the file names may optionally have a directory prefix if they
         # are derived from a zipfile, for example. Hence the regular expression
         # can't be anchored at the beginning of the file name.
-        regex = re.compile('.*event\d{9}-[a-zA-Z]+.csv(.gz)$')
+        regex = re.compile('.*event\d{9}-[a-zA-Z]+.csv(.gz)?$')
         files = filter(regex.match, files)
         prefixes = set(_.split('-', 1)[0] for _ in files)
         prefixes = sorted(prefixes)
