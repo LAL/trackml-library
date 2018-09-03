@@ -77,8 +77,8 @@ def weight_pt(pt, pt_inf=0.5, pt_sup=3, w_min=0.2, w_max=1.):
 # particle id for noise hits
 INVALID_PARTICLED_ID = 0
 
-def weight_hits(truth, particles):
-    """Compute per-hit weights for the scoring metric.
+def weight_hits_phase1(truth, particles):
+    """Compute per-hit weights for the phase 1 scoring metric.
 
     Hits w/ invalid particle ids, e.g. noise hits, have zero weight.
 
