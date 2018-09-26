@@ -2,8 +2,10 @@ TrackML utility library
 =======================
 
 A python library to simplify working with the
-[High Energy Physics Tracking Machine Learning challenge][kaggle_trackml]
-dataset.
+[High Energy Physics Tracking Machine Learning challenge][trackml]
+dataset. It can be used for the datasets of both the
+[accuracy phase][trackml_kaggle] and the
+[throughput phase][trackml_codalab].
 
 Installation
 ------------
@@ -51,6 +53,23 @@ for event_id, hits, cells, particles, truth in load_dataset('path/to/dataset'):
     ...
 ```
 
+To read a single event and compute additional columns derived from the
+stored data:
+
+```python
+from trackml.dataset import load_event
+from trackml.utils import add_position_quantities, add_momentum_quantities, decode_particle_id
+
+# get the particles data
+particles = load_event('path/to/event000000123', parts=['particles'])
+# decode particle id into vertex id, generation, etc.
+particles = decode_particle_id(particles)
+# add vertex rho, phi, r
+particles = add_position_quantities(particles, prefix='v')
+# add momentum eta, p, pt
+particles = add_momentum_quantities(particles)
+```
+
 The dataset path can be the path to a directory or to a zip file containing the
 events `.csv` files. Each event is lazily loaded during the iteration. Options
 are available to read only a subset of available events or only read selected
@@ -73,47 +92,45 @@ look at the function docstrings for detailed information.
 Authors
 -------
 
+The library was written by
+
+*   Moritz Kiehn
+
+with contributions from
+
+*   Sabrina Amrouche
 *   David Rousseau
 *   Ilija Vukotic
-*   Moritz Kiehn
-*   Sabrina Amrouche
+*   Nimar Arora
+*   Jon Nordby
+*   Yerkebulan Berdibekov
+*   Victor Estrade
 
 License
 -------
 
 All code is licensed under the [MIT license][mit_license].
 
-Files
------
-
-The following files are available for the participants:
-
-*   **sample_submission.zip**: a sample submission file with score zero.
-*   **test.zip**: the test dataset with 125 events; the basis for all
-    submissions.
-*   **train_{1,2,3,4,5}.zip**: the full training dataset with 8850 events split
-    into 5 files for convenience.
-*   **train_sample.zip**: the first 100 events from the training dataset.
-*   **detectors.zip**: additional detector geometry information.
-
 Dataset
 -------
 
-A dataset comprises multiple independent events, where each event contains
-simulated measurements (essentially 3D points) of particles generated in a collision between proton
-bunches at the [Large Hadron Collider][lhc] at [CERN][cern]. The goal of the
-tracking machine learning challenge is to group the recorded measurements or
-hits for each event into tracks, sets of hits that belong to the same initial
-particle. A solution must uniquely associate each hit to one track.
-The training dataset contains the recorded
-hits, their ground truth counterpart and their association to particles, and the
-initial parameters of those particles. The test dataset contains only the
+A dataset comprises multiple independent events, where each event
+contains simulated measurements (essentially 3D points) of particles
+generated in a collision between proton bunches at the
+[Large Hadron Collider][lhc] at [CERN][cern]. The goal of the tracking
+machine learning challenge is to group the recorded measurements or hits
+for each event into tracks, sets of hits that belong to the same initial
+particle. A solution must uniquely associate each hit to one track. The
+training dataset contains the recorded hits, their ground truth
+counterpart and their association to particles, and the initial
+parameters of those particles. The test dataset contains only the
 recorded hits.
 
-Once unzipped, the dataset is provided as a set of plain `.csv` files. Each
-event has four associated files that contain hits, hit cells, particles, and the
-ground truth association between them. The common prefix, e.g. `event000000010`,
-is always `event` followed by 9 digits.
+Each dataset is usually provided as a single archive file. Once
+unzipped, the dataset comprises a set of `.csv[.gz]` files. Each event
+can have up to four associated files that contain hits, hit cells,
+particles, and the ground truth association between them. The common
+prefix, e.g. `event000000010`, is always `event` followed by 9 digits.
 
     event000000000-hits.csv
     event000000000-cells.csv
@@ -124,8 +141,8 @@ is always `event` followed by 9 digits.
     event000000001-particles.csv
     event000000001-truth.csv
 
-Submissions must be provided as a single `.csv` file for the whole dataset with
-a name starting with `submission`, e.g.
+Submissions must be provided as a single `.csv` file for the whole
+dataset, e.g.
 
     submission-test.csv
     submission-final.csv
@@ -169,6 +186,9 @@ particle.
 The particles files contains the following values for each particle/entry:
 
 *   **particle_id**: numerical identifier of the particle inside the event.
+*   **particle_type**: numerical identifier of the particle type; the
+    [Particle Data Group Monte Carlo numbering scheme][pdg_mc_numbering]
+    is used to identify specific particle types.
 *   **vx, vy, vz**: initial position or vertex (in millimeters) in global
     coordinates.
 *   **px, py, pz**: initial momentum (in GeV/c) along each global axis.
@@ -182,7 +202,7 @@ All entries contain the generated information or ground truth.
 The cells file contains the constituent active detector cells that comprise each
 hit. The cells can be used to refine the hit to track association.
 A cell is the smallest granularity inside each detector module, much like a
-pixel on a screen, except that depending on the volume_id a cell can be a square
+pixel on a screen, except that depending on the **volume_id** a cell can be a square
 or a long rectangle. It is identified by two channel identifiers that are unique
 within each detector module and encode the position, much like column/row
 numbers of a matrix. A cell can provide signal information that the detector
@@ -199,9 +219,7 @@ the value might have different resolution.
 
 The submission file must associate each hit in each event to one and only one
 reconstructed particle track. The reconstructed tracks must be uniquely
-identified only within each event.  Participants are advised to compress the
-submission file (with zip, bzip2, gzip) before submission to the
-[Kaggle site][kaggle_trackml].
+identified only within each event.
 
 *   **event_id**: numerical identifier of the event; corresponds to the number
     found in the per-event file name prefix.
@@ -215,10 +233,10 @@ submission file (with zip, bzip2, gzip) before submission to the
 The detector is built from silicon slabs (or modules, rectangular or
 trapezoïdal), arranged in cylinders and disks, which measure the position (or
 hits) of the particles that cross them. The detector modules are organized
-into detector groups or volumes identified by a volume id. Inside a volume they
-are further grouped into layers identified by a layer id. Each layer can contain
+into detector groups or volumes identified by a **volume_id**. Inside a volume they
+are further grouped into layers identified by a **layer_id**. Each layer can contain
 an arbitrary number of detector modules, the smallest geometrically distinct
-detector object, each identified by a module_id. Within each group, detector
+detector object, each identified by a **module_id**. Within each group, detector
 modules are of the same type have e.g. the same granularity. All simulated
 detector modules are so-called semiconductor sensors that are build from thin
 silicon sensor chips. Each module can be represented by a two-dimensional,
@@ -259,4 +277,7 @@ an offset.
 [cern]: https://home.cern
 [lhc]: https://home.cern/topics/large-hadron-collider
 [mit_license]: http://www.opensource.org/licenses/MIT
-[kaggle_trackml]: https://www.kaggle.com/c/trackml-particle-identification
+[trackml]: https://sites.google.com/site/trackmlparticle/
+[trackml_kaggle]: https://www.kaggle.com/c/trackml-particle-identification
+[trackml_codalab]: https://competitions.codalab.org/competitions/20112
+[pdg_mc_numbering]: http://pdg.lbl.gov/2018/reviews/rpp2018-rev-monte-carlo-numbering.pdf
